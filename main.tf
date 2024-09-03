@@ -7,6 +7,6 @@ terraform {
   }
   required_version = ">= 0.14.9"
 }
-resource "aws_s3_bucket" "30DaysOfTerraform" {
-  bucket = "30daysofterraform-3344"
+resource "aws_s3_bucket" "terraform_challenge-state_bucket" {
+  bucket = "terraform-challenge-state-bucket-3344"
 }
