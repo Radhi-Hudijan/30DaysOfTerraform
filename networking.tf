@@ -14,9 +14,9 @@ resource "aws_subnet" "public-subnet" {
   vpc_id                  = aws_vpc.my-30Days-aws-vpc.id
   cidr_block              = "10.0.0.0/24"
   map_public_ip_on_launch = true
-  availability_zone       = "eu-west-1a"
+  availability_zone       = var.availability_zones
   tags = {
-    Name = "public-subnet"
+    Name = "${var.common_tags}-public-subnet"
   }
 }
 
@@ -25,16 +25,16 @@ resource "aws_internet_gateway" "my-30Days-aws-igw" {
   vpc_id = aws_vpc.my-30Days-aws-vpc.id
 
   tags = {
-    Name = "my-30Days-aws-igw"
+    Name = "${var.common_tags}-igw"
   }
 
 }
 # Attach the internet gateway to the VPC
-resource "aws_internet_gateway_attachment" "my-30Days-aws-igw-attachment" {
-  vpc_id              = aws_vpc.my-30Days-aws-vpc.id
-  internet_gateway_id = aws_internet_gateway.my-30Days-aws-igw.id
+# resource "aws_internet_gateway_attachment" "my-30Days-aws-igw-attachment" {
+#   vpc_id              = aws_vpc.my-30Days-aws-vpc.id
+#   internet_gateway_id = aws_internet_gateway.my-30Days-aws-igw.id
 
-}
+# }
 
 # Create a route table
 resource "aws_route_table" "my-30Days-aws-public-route-table" {
@@ -46,7 +46,7 @@ resource "aws_route_table" "my-30Days-aws-public-route-table" {
   }
 
   tags = {
-    Name = "public-route-table"
+    Name = "${var.common_tags}-public-route-table"
   }
 }
 
@@ -60,10 +60,10 @@ resource "aws_route_table_association" "public-route-table-association" {
 #create a private subnet
 resource "aws_subnet" "private-subnet" {
   vpc_id                  = aws_vpc.my-30Days-aws-vpc.id
-  cidr_block              = "10.0.0.1.0/24"
+  cidr_block              = "10.0.1.0/24"
   map_public_ip_on_launch = false
-  availability_zone       = "eu-west-1a"
+  availability_zone       = var.availability_zones
   tags = {
-    Name = "private-subnet"
+    Name = "${var.common_tags}-private-subnet"
   }
 }
